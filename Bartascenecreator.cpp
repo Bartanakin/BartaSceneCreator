@@ -1,6 +1,8 @@
 #include "Bartascenecreator.h"
 #include "./ui_bartascenecreator.h"
 #include <QMessageBox>
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 BartaSceneCreator::BartaSceneCreator(QWidget *parent)
     : QMainWindow(parent)
