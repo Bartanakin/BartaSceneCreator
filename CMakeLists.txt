@@ -17,12 +17,14 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 set(TS_FILES BartaSceneCreator_en_GB.ts)
 
 set(PROJECT_SOURCES
+        resources.qrc
         main.cpp
         Bartascenecreator.cpp
         Bartascenecreator.h
         bartascenecreator.ui
         ${TS_FILES}
 )
+
 
 include(FetchContent)
 
@@ -38,6 +40,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
+    add_subdirectory(src)
+
+    target_include_directories(BartaSceneCreator PUBLIC "${PROJECT_SOURCE_DIR}/include")
 
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
