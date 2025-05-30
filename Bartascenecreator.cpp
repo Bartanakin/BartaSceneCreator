@@ -1,12 +1,13 @@
 #include "./ui_bartascenecreator.h"
 #include "Bartascenecreator.h"
 #include "QtComponents/DialogRepository.h"
+#include "QtComponents/Form/EyeForm.h"
+#include "QtComponents/Form/NullForm.h"
 #include "QtComponents/PageEnum.h"
 #include "QtComponents/StackElement/JsonStackElement.h"
-#include <QFileDialog>
-#include <QInputDialog>
 
 using JsonStackElement = Barta::QtComponents::StackElement::JsonStackElement;
+using namespace Barta::QtComponents::Form;
 
 BartaSceneCreator::BartaSceneCreator(
     QWidget* parent
@@ -53,20 +54,20 @@ void BartaSceneCreator::loadPage2() {
 
     // auto emptyTags = std::vector<std::string>();
 
-    this->sceneElement = std::make_unique<JsonStackElement>("scene.png", "Scene");
+    this->sceneElement = std::make_unique<JsonStackElement>(std::make_unique<NullForm>(0), "scene.png", "Scene");
 
-    auto cameraElement = std::make_unique<JsonStackElement>("camera-movie.png", "Camera");
+    auto cameraElement = std::make_unique<JsonStackElement>(std::make_unique<NullForm>(0), "camera-movie.png", "Camera");
 
-    auto objectsElement = std::make_unique<JsonStackElement>("objects.png", "Objects", std::vector<std::string>());
+    auto objectsElement = std::make_unique<JsonStackElement>(std::make_unique<NullForm>(0), "objects.png", "Objects", std::vector<std::string>());
     this->sceneElement->addChild(std::move(objectsElement));
 
-    auto eyeElement = std::make_unique<JsonStackElement>("eye.png", "Eye");
+    auto eyeElement = std::make_unique<JsonStackElement>(std::make_unique<EyeForm>(), "eye.png", "Eye");
     cameraElement->addChild(std::move(eyeElement));
 
-    auto centerElement = std::make_unique<JsonStackElement>("center.png", "Center");
+    auto centerElement = std::make_unique<JsonStackElement>(std::make_unique<NullForm>(0), "center.png", "Center");
     cameraElement->addChild(std::move(centerElement));
 
-    auto upElement = std::make_unique<JsonStackElement>("up.png", "Up");
+    auto upElement = std::make_unique<JsonStackElement>(std::make_unique<NullForm>(0), "up.png", "Up");
     cameraElement->addChild(std::move(upElement));
 
     this->sceneElement->addChild(std::move(cameraElement));
@@ -105,7 +106,13 @@ void BartaSceneCreator::refreshMiddleColumn() {
 
     for (const auto& element: middleElements) {
         auto button = element->getButton();
-        connect(button, &QToolButton::clicked, this, [&]() { this->addElementOnStack(element.get()); });
+        connect(button, &QToolButton::clicked, this, [&]() {
+            if (element->isList()) {
+                this->openObjectList(element.get());
+            } else {
+                this->addElementOnStack(element.get());
+            }
+        });
 
         middleLayout->addWidget(button, 0, Qt::AlignHCenter | Qt::AlignTop);
     }
@@ -115,6 +122,7 @@ void BartaSceneCreator::addElementOnStack(
     JsonStackElement* element
 ) {
     this->elementStack.push_back(element);
+    this->openForm(element);
 
     // left column
     auto layout = dynamic_cast<QVBoxLayout*>(ui->json_stack->widget()->layout());
@@ -137,11 +145,82 @@ void BartaSceneCreator::addElementOnStack(
             delete item;
         }
 
+        for (int i = this->elementStack.size() - 1; i >= elementCount; i--) {
+            if (this->elementStack[i]->isList()) {
+                this->tagStack.pop_back();
+            }
+        }
+
         this->elementStack.erase(this->elementStack.begin() + elementCount, this->elementStack.end());
-    ui->json_stack->widget()->setMaximumHeight(this->elementStack.size() * (100 + 10));
+        ui->json_stack->widget()->setMaximumHeight(this->elementStack.size() * (100 + 10));
 
         this->refreshMiddleColumn();
+        this->openForm(this->elementStack[this->elementStack.size() - 1]);
     });
 
     this->refreshMiddleColumn();
+}
+
+void BartaSceneCreator::openObjectList(
+    Barta::QtComponents::StackElement::JsonStackElement* element
+) {
+    if (this->ui->selected_element_data->widget() != nullptr) {
+        delete this->ui->selected_element_data->takeWidget();
+    }
+
+    QWidget* contentWidget = new QWidget();
+    QVBoxLayout* layout = new QVBoxLayout(contentWidget);
+    layout->setSpacing(5);
+    layout->setContentsMargins(5, 5, 5, 5);
+    layout->setAlignment(Qt::AlignTop);
+
+    this->ui->selected_element_data->setWidget(contentWidget);
+    this->ui->selected_element_data->setWidgetResizable(true);
+
+    for (const auto& listTag: element->getListTags()) {
+        auto choice = new QToolButton();
+        choice->setText(listTag.c_str());
+        choice->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        layout->addWidget(choice);
+
+        connect(choice, &QToolButton::clicked, this, [=]() {
+            this->tagStack.push_back(listTag);
+
+            this->addElementOnStack(element);
+            this->refreshMiddleColumn();
+        });
+    }
+
+    auto choice = new QToolButton();
+    choice->setText("Add new object");
+    choice->setIcon(QIcon(std::filesystem::path(":/Icons/plus.png").c_str()));
+    choice->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    choice->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    layout->addWidget(choice);
+    connect(choice, &QToolButton::clicked, this, [=]() {
+        this->tagStack.push_back("New object");
+        element->addListTag("New object");
+
+        this->addElementOnStack(element);
+        this->refreshMiddleColumn();
+    });
+}
+
+void BartaSceneCreator::openForm(
+    Barta::QtComponents::StackElement::JsonStackElement* element
+) {
+    if (this->ui->selected_element_data->widget() != nullptr) {
+        delete this->ui->selected_element_data->takeWidget();
+    }
+
+    QWidget* contentWidget = new QWidget();
+    QVBoxLayout* layout = new QVBoxLayout(contentWidget);
+    layout->setSpacing(5);
+    layout->setContentsMargins(5, 5, 5, 5);
+    layout->setAlignment(Qt::AlignTop);
+
+    this->ui->selected_element_data->setWidget(contentWidget);
+    this->ui->selected_element_data->setWidgetResizable(true);
+
+    element->getForm()->submit(layout, this->sceneDocument->getModel(), this->tagStack);
 }

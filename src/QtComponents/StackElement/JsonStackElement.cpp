@@ -2,18 +2,22 @@
 
 namespace Barta::QtComponents::StackElement {
 JsonStackElement::JsonStackElement(
+    std::unique_ptr<Form::FormInterface> form,
     std::string iconName,
     std::string text
 ) noexcept:
+    form(std::move(form)),
     iconName(iconName),
     text(text),
     list(false) {}
 
 JsonStackElement::JsonStackElement(
+    std::unique_ptr<Form::FormInterface> form,
     std::string iconName,
     std::string text,
     std::vector<std::string> listTags
 ) noexcept:
+    form(std::move(form)),
     iconName(iconName),
     text(text),
     list(true),
@@ -22,7 +26,7 @@ JsonStackElement::JsonStackElement(
 QToolButton* JsonStackElement::getButton() const noexcept {
     auto button = new QToolButton();
     button->setFixedSize(100, 100);
-    button->setIcon(QIcon((std::filesystem::path(":") / "Icons" / this->iconName).c_str()));
+    button->setIcon(QIcon(std::filesystem::path(":/Icons/" + this->iconName).c_str()));
     button->setIconSize({48, 48});
     button->setText(this->text.c_str());
     button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
@@ -47,5 +51,15 @@ void JsonStackElement::addChild(
     std::unique_ptr<JsonStackElement> child
 ) noexcept {
     this->children.push_back(std::move(child));
+}
+
+void JsonStackElement::addListTag(
+    const std::string& listTag
+) {
+    this->listTags.push_back(listTag);
+}
+
+Form::FormInterface* JsonStackElement::getForm() const noexcept {
+    return this->form.get();
 }
 }

@@ -16,3 +16,9 @@ using json = nlohmann::json;
 #include <QLineEdit>
 #include <QDialogButtonBox>
 #include <QToolButton>
+#include <QDoubleValidator>
+#include <QPushButton>
+#include <QFileDialog>
+#include <QMainWindow>
+#include <QInputDialog>
+#include <QObject>

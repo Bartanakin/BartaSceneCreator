@@ -8,6 +8,7 @@ public:
 
     QString askForSceneNameDialog();
 
+    QWidget* getFloatingPointInput(const std::string& label, float& target);
 private:
     QWidget* parent;
 };

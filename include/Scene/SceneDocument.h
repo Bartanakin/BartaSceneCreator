@@ -10,6 +10,8 @@ public:
 
     static Model::Scene generateDefaultModel();
 
+    Model::Scene& getModel() noexcept { return this->sceneModel; }
+
 private:
     Model::Scene sceneModel;
     std::filesystem::path scenePath;

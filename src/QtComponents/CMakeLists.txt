@@ -3,3 +3,5 @@ target_sources(BartaSceneCreator PUBLIC
 )
 
 add_subdirectory(StackElement)
+
+add_subdirectory(Form)
