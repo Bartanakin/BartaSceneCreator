@@ -6,19 +6,21 @@ namespace Barta::QtComponents::Form {
 class NullForm: public virtual FormInterface {
 public:
     NullForm(
-        int tagSize
+        int hashStackSize
     ) noexcept:
-        tagSize(tagSize) {}
+        hashStackSize(hashStackSize) {}
 
-    int tagStackSizeRequirement() const noexcept override { return this->tagSize; }
+    int hashStackSizeRequirement() const noexcept override { return this->hashStackSize; }
 
-    void submit(
+    void bind(
         QVBoxLayout* layout,
         Scene::Model::Scene& model,
-        const std::vector<std::string>& tagStack
+        std::vector<std::string>& hashStack
     ) override {}
 
+    std::vector<std::string> getHashList(Scene::Model::Scene& model, std::vector<std::string>& hashStack) const override { return {}; }
+
 private:
-    int tagSize;
+    int hashStackSize;
 };
 }

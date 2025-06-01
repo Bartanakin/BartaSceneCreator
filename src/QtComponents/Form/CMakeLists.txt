@@ -1,3 +1,6 @@
+add_subdirectory(Camera)
 target_sources(BartaSceneCreator PUBLIC
-    EyeForm.cpp
+    ObjectForm.cpp
 )
+
+add_subdirectory(Object)

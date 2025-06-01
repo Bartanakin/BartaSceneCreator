@@ -31,8 +31,8 @@
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="minimumSize">
        <size>
-        <width>1200</width>
-        <height>900</height>
+        <width>0</width>
+        <height>0</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -54,35 +54,47 @@
        <number>0</number>
       </property>
       <widget class="QWidget" name="page">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
-         <width>400</width>
-         <height>300</height>
+         <width>0</width>
+         <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>400</width>
-         <height>300</height>
+         <width>100000</width>
+         <height>100000</height>
         </size>
        </property>
        <layout class="QFormLayout" name="formLayout">
         <item row="0" column="0">
          <widget class="QWidget" name="verticalWidget" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
-            <width>400</width>
-            <height>300</height>
+            <width>1200</width>
+            <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>400</width>
-            <height>300</height>
+            <width>100000</width>
+            <height>100000</height>
            </size>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout">
-           <item alignment="Qt::AlignmentFlag::AlignHCenter">
+           <item>
             <widget class="QToolButton" name="add_scene_button">
              <property name="minimumSize">
               <size>
@@ -169,83 +181,142 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_2">
-       <property name="minimumSize">
-        <size>
-         <width>1200</width>
-         <height>900</height>
-        </size>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QScrollArea" name="json_stack">
+         <widget class="QGroupBox" name="groupBox_2">
           <property name="maximumSize">
            <size>
-            <width>200</width>
-            <height>900</height>
+            <width>16777215</width>
+            <height>800</height>
            </size>
           </property>
-          <property name="widgetResizable">
-           <bool>true</bool>
+          <property name="title">
+           <string/>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
-          </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents_5">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>198</width>
-             <height>880</height>
-            </rect>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QScrollArea" name="json_stack">
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>900</height>
+              </size>
+             </property>
+             <property name="widgetResizable">
+              <bool>true</bool>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
+             </property>
+             <widget class="QWidget" name="scrollAreaWidgetContents_8">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>198</width>
+                <height>771</height>
+               </rect>
+              </property>
+             </widget>
+            </widget>
+           </item>
+           <item>
+            <widget class="QScrollArea" name="selected_element_children">
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="widgetResizable">
+              <bool>true</bool>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignTop</set>
+             </property>
+             <widget class="QWidget" name="scrollAreaWidgetContents_9">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>198</width>
+                <height>771</height>
+               </rect>
+              </property>
+             </widget>
+            </widget>
+           </item>
+           <item>
+            <widget class="QScrollArea" name="selected_element_data">
+             <property name="baseSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="widgetResizable">
+              <bool>true</bool>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignTop</set>
+             </property>
+             <widget class="QWidget" name="scrollAreaWidgetContents_11">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>744</width>
+                <height>771</height>
+               </rect>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
         <item>
-         <widget class="QScrollArea" name="selected_element_children">
+         <widget class="QGroupBox" name="groupBox">
           <property name="maximumSize">
            <size>
-            <width>200</width>
-            <height>16777215</height>
+            <width>16777215</width>
+            <height>100</height>
            </size>
           </property>
-          <property name="widgetResizable">
-           <bool>true</bool>
+          <property name="title">
+           <string/>
           </property>
           <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignTop</set>
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
           </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents_6">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>198</width>
-             <height>880</height>
-            </rect>
-           </property>
-          </widget>
-         </widget>
-        </item>
-        <item>
-         <widget class="QScrollArea" name="selected_element_data">
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignTop</set>
-          </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents_7">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>768</width>
-             <height>880</height>
-            </rect>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QLabel" name="save_status_label">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="save_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>250</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Save</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>

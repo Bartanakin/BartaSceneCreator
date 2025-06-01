@@ -1,5 +1,7 @@
 #include <QtComponents/DialogRepository.h>
 
+#include "CustomWidgets/FloatInputWidget.h"
+
 namespace Barta::QtComponents {
 DialogRepository::DialogRepository(
     QWidget* parent
@@ -32,34 +34,14 @@ QString DialogRepository::askForSceneNameDialog() {
     return result + ".json";
 }
 
-QWidget* DialogRepository::getFloatingPointInput(
-    const std::string& label,
-    float& target
+std::array<QWidget*, 3> DialogRepository::getVectorInputs(
+    Scene::Model::Vector3& target
 ) {
-    QLineEdit *input = new QLineEdit();
-    input->setValidator(new QDoubleValidator(-1e10, 1e10, 3));
-    input->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    input->setText(std::to_string(target).c_str());
-
-    QObject::connect(input, &QLineEdit::editingFinished, [input, &target]() {
-        bool ok;
-        float value = input->text().toFloat(&ok);
-        if (ok) {
-            target = value;
-        } else {
-            input->setText("");
-        }
-    });
-
-    QLabel *qlabel = new QLabel(label.c_str());
-
-    QHBoxLayout *rowLayout = new QHBoxLayout();
-    rowLayout->addWidget(qlabel);
-    rowLayout->addWidget(input);
-
-    QWidget *rowWidget = new QWidget();
-    rowWidget->setLayout(rowLayout);
-
-    return rowWidget;
+    return {
+        new CustomWidgets::FloatInputWidget("x", target.x),
+        new CustomWidgets::FloatInputWidget("y", target.y),
+        new CustomWidgets::FloatInputWidget("z", target.z),
+    };
 }
+
 }

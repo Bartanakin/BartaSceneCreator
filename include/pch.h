@@ -4,6 +4,10 @@
 #include <vector>
 #include <filesystem>
 #include <fstream>
+#include <concepts>
+#include <string>
+#include <ranges>
+#include <iostream>
 
 // json
 #include <nlohmann/json.hpp>
@@ -22,3 +26,6 @@ using json = nlohmann::json;
 #include <QMainWindow>
 #include <QInputDialog>
 #include <QObject>
+#include <QComboBox>
+#include <QPlainTextEdit>
+#include <QTimer>

@@ -40,6 +40,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
+    add_subdirectory(include)
     add_subdirectory(src)
 
     target_include_directories(BartaSceneCreator PUBLIC "${PROJECT_SOURCE_DIR}/include")

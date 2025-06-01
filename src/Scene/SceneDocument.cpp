@@ -44,4 +44,21 @@ Model::Scene SceneDocument::generateDefaultModel() {
 
     return sceneModel;
 }
+
+bool SceneDocument::saveToFile() {
+    try {
+        std::ofstream file(this->scenePath);
+        json j = this->sceneModel;
+
+        file << std::setw(4) << j << std::endl;
+    } catch (std::exception& e) {
+        return false;
+    }
+
+    return true;
+}
+
+std::string SceneDocument::getPath() const {
+    return this->scenePath.string();
+}
 }

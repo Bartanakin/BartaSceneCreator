@@ -3,26 +3,42 @@
 #include <pch.h>
 
 namespace Barta::QtComponents::StackElement {
-class JsonStackElement {
-public:
-    JsonStackElement(std::unique_ptr<Form::FormInterface> form, std::string iconName, std::string text) noexcept;
-    JsonStackElement(std::unique_ptr<Form::FormInterface> form, std::string iconName, std::string text, std::vector<std::string> listTags) noexcept;
+class JsonStackElement: public QToolButton {
+    Q_OBJECT
 
-    QToolButton* getButton() const noexcept;
+public:
+    JsonStackElement(
+        std::unique_ptr<Form::FormInterface> form,
+        std::string iconName,
+        std::string text,
+        bool list = false,
+        QWidget* parent = nullptr
+    ) noexcept;
 
     bool isList() const noexcept;
 
     std::vector<std::unique_ptr<JsonStackElement>>& getChildren() noexcept;
 
-    std::vector<std::string>& getListTags() noexcept;
-
     void addChild(std::unique_ptr<JsonStackElement> child) noexcept;
-
-    void addListTag(const std::string& listTag);
 
     Form::FormInterface* getForm() const noexcept;
 
+public:
+    enum class State {
+        MIDDLE = 0,
+        LEFT = 1
+    };
+
+    State getState() const { return this->state; }
+
+    void setState(
+        State state
+    ) {
+        this->state = state;
+    }
+
 private:
+    State state;
     std::string iconName;
     std::string text;
     std::unique_ptr<Form::FormInterface> form;

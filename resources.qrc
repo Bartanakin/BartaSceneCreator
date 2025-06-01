@@ -8,5 +8,18 @@
         <file>Icons/eye.png</file>
         <file>Icons/center.png</file>
         <file>Icons/up.png</file>
+        <file>Icons/meshed-polygon.png</file>
+        <file>Icons/polygon.png</file>
+        <file>Icons/mass.png</file>
+        <file>Icons/mass-center.png</file>
+        <file>Icons/move.png</file>
+        <file>Icons/rotation.png</file>
+        <file>Icons/speed.png</file>
+        <file>Icons/hitbox.png</file>
+        <file>Icons/sprite.png</file>
+        <file>Icons/size.png</file>
+        <file>Icons/vertex.png</file>
+        <file>Icons/transformation.png</file>
+        <file>Icons/color.png</file>
     </qresource>
 </RCC>

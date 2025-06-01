@@ -12,6 +12,10 @@ public:
 
     Model::Scene& getModel() noexcept { return this->sceneModel; }
 
+    bool saveToFile();
+
+    std::string getPath() const;
+
 private:
     Model::Scene sceneModel;
     std::filesystem::path scenePath;

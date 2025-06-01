@@ -7,8 +7,10 @@ class FormInterface {
 public:
     virtual ~FormInterface() = default;
 
-    virtual int tagStackSizeRequirement() const noexcept = 0;
+    virtual int hashStackSizeRequirement() const noexcept = 0;
 
-    virtual void submit(QVBoxLayout* layout, Scene::Model::Scene& model, const std::vector<std::string>& tagStack) = 0;
+    virtual void bind(QVBoxLayout* layout, Scene::Model::Scene& model, std::vector<std::string>& hashStack) = 0;
+
+    virtual std::vector<std::string> getHashList(Scene::Model::Scene& model, std::vector<std::string>& hashStack) const = 0;
 };
 }

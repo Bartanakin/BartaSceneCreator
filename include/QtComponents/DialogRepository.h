@@ -1,6 +1,8 @@
 #pragma once
 #include <pch.h>
 
+#include "Scene/Model/Vector3.h"
+
 namespace Barta::QtComponents {
 class DialogRepository {
 public:
@@ -8,7 +10,8 @@ public:
 
     QString askForSceneNameDialog();
 
-    QWidget* getFloatingPointInput(const std::string& label, float& target);
+    std::array<QWidget*, 3> getVectorInputs(Scene::Model::Vector3& target);
+
 private:
     QWidget* parent;
 };

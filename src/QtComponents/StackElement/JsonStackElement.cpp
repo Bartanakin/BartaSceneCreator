@@ -1,38 +1,25 @@
-#include <QtComponents/StackElement/JsonStackElement.h>
+#include <CustomWidgets/JsonStackElement.h>
 
 namespace Barta::QtComponents::StackElement {
 JsonStackElement::JsonStackElement(
     std::unique_ptr<Form::FormInterface> form,
     std::string iconName,
-    std::string text
-) noexcept:
-    form(std::move(form)),
-    iconName(iconName),
-    text(text),
-    list(false) {}
-
-JsonStackElement::JsonStackElement(
-    std::unique_ptr<Form::FormInterface> form,
-    std::string iconName,
     std::string text,
-    std::vector<std::string> listTags
+    bool list,
+    QWidget* parent
 ) noexcept:
+    QToolButton(parent),
+    state(State::MIDDLE),
     form(std::move(form)),
     iconName(iconName),
     text(text),
-    list(true),
-    listTags(std::move(listTags)) {}
-
-QToolButton* JsonStackElement::getButton() const noexcept {
-    auto button = new QToolButton();
-    button->setFixedSize(100, 100);
-    button->setIcon(QIcon(std::filesystem::path(":/Icons/" + this->iconName).c_str()));
-    button->setIconSize({48, 48});
-    button->setText(this->text.c_str());
-    button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-
-    return button;
+    list(list) {
+    this->setFixedSize(100, 100);
+    this->setIcon(QIcon(std::filesystem::path(":/Icons/" + this->iconName).c_str()));
+    this->setIconSize({48, 48});
+    this->setText(this->text.c_str());
+    this->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 }
 
 bool JsonStackElement::isList() const noexcept {
@@ -43,20 +30,10 @@ std::vector<std::unique_ptr<JsonStackElement>>& JsonStackElement::getChildren() 
     return this->children;
 }
 
-std::vector<std::string>& JsonStackElement::getListTags() noexcept {
-    return this->listTags;
-}
-
 void JsonStackElement::addChild(
     std::unique_ptr<JsonStackElement> child
 ) noexcept {
     this->children.push_back(std::move(child));
-}
-
-void JsonStackElement::addListTag(
-    const std::string& listTag
-) {
-    this->listTags.push_back(listTag);
 }
 
 Form::FormInterface* JsonStackElement::getForm() const noexcept {
